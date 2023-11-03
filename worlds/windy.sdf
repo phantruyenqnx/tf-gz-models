@@ -1,5 +1,5 @@
 <sdf version='1.9'>
-  <world name='default'>
+  <world name='windy'>
     <physics type="ode">
       <max_step_size>0.004</max_step_size>
       <real_time_factor>1.0</real_time_factor>
@@ -120,7 +120,7 @@
             <izz>1</izz>
           </inertia>
         </inertial>
-        <enable_wind>false</enable_wind>
+        <enable_wind>true</enable_wind>
       </link>
       <pose>0 0 0 0 -0 0</pose>
       <self_collide>false</self_collide>
@@ -144,6 +144,8 @@
         <falloff>0</falloff>
       </spot>
     </light>
+    <wind>
+	<linear_velocity>10 10 10</linear_velocity>
+    </wind>
   </world>
 </sdf>
-
