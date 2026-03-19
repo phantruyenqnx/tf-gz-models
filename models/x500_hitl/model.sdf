@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  X500 HIL model for Gazebo Harmonic.
+
+  Identical airframe to x500 (reuses x500_base mesh + sensors + motor joints).
+  Differences from x500:
+    - No gz-sim-multicopter-control-system (software PID removed)
+    - GZHILBridge plugin drives motor_speed topic from real PX4 board via USB serial
+
+  Required board params (set once via QGC):
+    SYS_HITL        = 1
+    SYS_AUTOSTART   = 1001   (generic multicopter HIL)
+    MAV_USEHILGPS   = 1
+    CBRK_SUPPLY_CHK = 894281
+-->
+<sdf version='1.9'>
+  <model name='x500_hitl'>
+    <!-- Reuse x500_base: links, joints, sensors, collisions, visuals -->
+    <include merge='true'>
+      <uri>model://x500_base</uri>
+    </include>
+
+    <!-- Motor 0 — front-left, CCW -->
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+            name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_0_joint</jointName>
+      <linkName>rotor_0</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.016</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <!-- Motor 1 — back-right, CCW -->
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+            name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_1_joint</jointName>
+      <linkName>rotor_1</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.016</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>1</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <!-- Motor 2 — front-right, CW -->
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+            name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_2_joint</jointName>
+      <linkName>rotor_2</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.016</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>2</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <!-- Motor 3 — back-left, CW -->
+    <plugin filename="gz-sim-multicopter-motor-model-system"
+            name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_3_joint</jointName>
+      <linkName>rotor_3</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <maxRotVelocity>1000.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant>
+      <momentConstant>0.016</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>3</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <!--
+      GZHILBridge: bridges real PX4 FMU to Gz Harmonic via USB serial MAVLink.
+      - Subscribes to IMU/Mag/Baro/GPS sensor topics, encodes HIL_SENSOR + HIL_GPS,
+        writes to serial (board runs SimulatorMavlink, publishes to uORB).
+      - Reads HIL_ACTUATOR_CONTROLS from serial, publishes to command/motor_speed.
+    -->
+    <!--
+      GZHILBridge transport options (uncomment one):
+
+      Option A — Serial (GZHILBridge owns /dev/ttyACM0, no mavlink-routerd):
+        <serial_device>/dev/ttyACM0</serial_device>
+        <baud_rate>921600</baud_rate>
+
+      Option B — TCP (mavlink-routerd owns serial, QGC + GZHILBridge share):
+        Launch routerd first:
+          mavlink-routerd -e 172.17.128.1:14550 /dev/ttyACM0:921600
+        routerd opens TCP server on 5760 automatically.
+        Then use the TCP params below.
+    -->
+    <plugin filename="libGZHILBridge.so" name="custom::GZHILBridge">
+      <!-- TCP mode: connects to mavlink-routerd TCP server (port 5760) -->
+      <tcp_host>127.0.0.1</tcp_host>
+      <tcp_port>5760</tcp_port>
+      <model_name>x500_hitl</model_name>
+      <world_name>hitl_default</world_name>
+    </plugin>
+
+  </model>
+</sdf>
