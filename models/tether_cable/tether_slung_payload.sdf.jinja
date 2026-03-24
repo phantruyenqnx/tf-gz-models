@@ -1,0 +1,350 @@
+{#-------------------SDF generator for Tether Gazebo model----------#}
+{#--------------The parameters bellow are the ones to be tweaked------------------#}
+{#--------------------------:Tweakable parameters:-------------------------------#}
+
+{# ============================================================================= #}
+{# PART 1: LINK_ATTACH (Attachment link from drone) #}
+{# ============================================================================= #}
+{%- set attach_length = 0.05 -%}      {# 5cm long #}
+{%- set attach_radius = 0.03 -%}      {# 3cm radius #}
+{%- set attach_mass = 0.200 -%}       {# 200g #}
+{%- set attach_initial_z = 0.00 -%}   {# 5cm from ground, vertical #}
+
+{# ============================================================================= #}
+{# PART 2: TETHER CABLE (100 segments) #}
+{# ============================================================================= #}
+{%- set tether_diameter = 0.006 -%}      {# 6mm diameter #}
+{%- set tether_radius = tether_diameter / 2 -%}  {# 3mm radius #}
+{%- set tether_total_length = 3.0 -%}    {# 3m total length #}
+{%- set tether_total_mass = 3.0 / 47.0 -%}  {# (3/47) kg = 0.06383 kg #}
+{%- set number_elements = 100 -%}        {# 100 segments #}
+{%- set last_elem = number_elements - 1 -%}
+
+{# Calculate per-segment parameters #}
+{%- set segment_length = tether_total_length / number_elements -%}  {# 0.03m per segment #}
+{%- set segment_mass = tether_total_mass / number_elements -%}  {# ~0.0006383 kg per segment #}
+
+{# Split mass between link and joint sphere for realistic distribution #}
+{%- set link_mass_fraction = 0.7 -%}  {# 70% mass in cylindrical link #}
+{%- set joint_mass_fraction = 0.3 -%}  {# 30% mass in spherical joint #}
+{%- set link_mass = segment_mass * link_mass_fraction -%}
+{%- set joint_mass = segment_mass * joint_mass_fraction -%}
+
+{# Joint sphere radius (small connection point) #}
+{%- set joint_sphere_radius = tether_radius -%}  {# Same as cable radius #}
+
+{# Visual scaling for better visibility #}
+{%- set visual_scale = 1.5 -%}
+{%- set link_visual_radius = tether_radius * visual_scale -%}
+{%- set joint_visual_radius = joint_sphere_radius * visual_scale -%}
+
+{# Cable material colors #}
+{%- set cable_color = 'Green' -%}
+{%- set joint_color = 'Gray' -%}
+
+{# ============================================================================= #}
+{# CABLE STIFFNESS CONTROL (independent of segment count)                      #}
+{# ============================================================================= #}
+{# Adjust these to control cable behavior:
+   - spring_stiffness: 0.0 = very flexible (rope-like)
+                       0.1-1.0 = medium stiffness (cable-like)
+                       1.0-10.0 = stiff (rod-like)
+   - damping: Higher = less oscillation
+   - friction: Higher = less free rotation
+#}
+{%- set cable_stiffness = 0.0 -%}    {# 0.0 = flexible, 10.0 = very stiff #}
+{%- set cable_damping = 0.001 -%}     {# Damping to reduce oscillation #}
+{%- set cable_friction = 0.001 -%}   {# Friction at joints #}
+
+{# Calculate joint parameters based on segment length and desired stiffness #}
+{# Scale stiffness inversely with segment length to maintain consistent behavior #}
+{%- set stiffness_scale_factor = 0.03 / segment_length -%}  {# Normalize to 3cm reference #}
+{%- set spring_stiffness = cable_stiffness * stiffness_scale_factor -%}
+{%- set damping = cable_damping * stiffness_scale_factor -%}
+{%- set friction = cable_friction -%}
+{%- set spring_reference = 0.0 -%}
+
+{# ============================================================================= #}
+{# INITIAL CONFIGURATION #}
+{# ============================================================================= #}
+{# Link_attach: vertical, 5cm from ground #}
+{# Tether: horizontal along Y axis, on ground #}
+{%- set ground_level = 0.0 -%}
+
+{# ============================================================================= #}
+{# MACROS FOR GEOMETRY #}
+{# ============================================================================= #}
+
+{%- macro cylinder(length, radius) -%}
+      <geometry>
+        <cylinder>
+          <length>{{length}}</length>
+          <radius>{{radius}}</radius>
+        </cylinder>
+      </geometry>
+{%- endmacro -%}
+
+{%- macro sphere(radius) -%}
+      <geometry>
+        <sphere>
+          <radius>{{radius}}</radius>
+        </sphere>
+      </geometry>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# INERTIA CALCULATIONS #}
+{# ============================================================================= #}
+
+{%- macro cylinder_inertial(mass, length, radius) -%}
+{# Cylinder inertia tensor (solid cylinder) #}
+{# Izz = m/2 * r^2 (about cylinder axis) #}
+{# Ixx = Iyy = m/12 * (3*r^2 + h^2) (perpendicular to axis) #}
+{%- set izz = mass / 2.0 * radius * radius -%}
+{%- set ixx = mass / 12.0 * (3.0 * radius * radius + length * length) -%}
+{%- set iyy = ixx -%}
+      <inertial>
+        <mass>{{mass}}</mass>
+        <inertia>
+          <ixx>{{ixx}}</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>{{iyy}}</iyy>
+          <iyz>0</iyz>
+          <izz>{{izz}}</izz>
+        </inertia>
+      </inertial>
+{%- endmacro -%}
+
+{%- macro sphere_inertial(mass, radius) -%}
+{# Sphere inertia tensor (solid sphere) #}
+{# I = 2/5 * m * r^2 for all axes #}
+{%- set inertia = 0.4 * mass * radius * radius -%}
+      <inertial>
+        <mass>{{mass}}</mass>
+        <inertia>
+          <ixx>{{inertia}}</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>{{inertia}}</iyy>
+          <iyz>0</iyz>
+          <izz>{{inertia}}</izz>
+        </inertia>
+      </inertial>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# COLLISION MACROS #}
+{# ============================================================================= #}
+
+{%- macro cylinder_collision(length, radius, pose_offset_x) -%}
+      <collision name="collision">
+        <pose>{{pose_offset_x}} 0 0 0 1.5707963267948966 0</pose>
+        {{ cylinder(length, radius) }}
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.5</mu>
+              <mu2>0.5</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+{%- endmacro -%}
+
+{%- macro sphere_collision(radius) -%}
+      <collision name="sphere_collision">
+        {{ sphere(radius) }}
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# VISUAL MACROS #}
+{# ============================================================================= #}
+
+{%- macro material(color_name) -%}
+      <material>
+        <script>
+          <name>Gazebo/{{color_name}}</name>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+        </script>
+      </material>
+{%- endmacro -%}
+
+{%- macro cylinder_visual(length, radius, color, pose_offset_x) -%}
+      <visual name="cylinder_visual">
+        <pose>{{pose_offset_x}} 0 0 0 1.5707963267948966 0</pose>
+        {{ cylinder(length, radius) }}
+        {{ material(color) }}
+      </visual>
+{%- endmacro -%}
+
+{%- macro sphere_visual(radius, color) -%}
+      <visual name="sphere_visual">
+        {{ sphere(radius) }}
+        {{ material(color) }}
+      </visual>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# LINK MACROS #}
+{# ============================================================================= #}
+
+{%- macro link_attachment() -%}
+    {# Link_attach: vertical cylinder, 5cm long, 3cm radius, 200g #}
+    {# Position: base at z=0.05m (5cm from ground), extending upward #}
+    {%- set link_center_z = attach_initial_z + attach_length / 2.0 -%}
+    <link name="link_attachment">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <pose>0.0 0.0 {{link_center_z}} 0.0 0.0 0.0</pose>  {# Vertical (default orientation) #}
+      {{ cylinder_inertial(attach_mass, attach_length, attach_radius) }}
+      {{ cylinder_collision(attach_length, attach_radius, 0.0) }}
+      {{ cylinder_visual(attach_length, attach_radius * 1.2, 'DarkGray', 0.0) }}
+    </link>
+{%- endmacro -%}
+
+{%- macro tether_link(n, x, y, z, yaw) -%}
+    {# Tether cable segment: horizontal cylinder along Y axis #}
+    <link name="link_{{n}}">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <pose>{{x}} {{y}} {{z}} 0.0 0.0 {{yaw}}</pose>
+      {{ cylinder_inertial(link_mass, segment_length, tether_radius) }}
+      {%- set pose_x = segment_length / 2.0 -%}
+      {{ cylinder_collision(segment_length, tether_radius, pose_x) }}
+      {{ cylinder_visual(segment_length, link_visual_radius, cable_color, pose_x) }}
+      {{ sphere_visual(joint_visual_radius, joint_color) }}
+    </link>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# JOINT MACROS #}
+{# ============================================================================= #}
+
+{%- macro universal_joint(joint_name, parent_name, child_name) -%}
+    <joint name="{{joint_name}}" type="universal">
+      <parent>{{parent_name}}</parent>
+      <child>{{child_name}}</child>
+      <axis>
+        <xyz expressed_in="__model__">0 1 0</xyz>
+        <dynamics>
+          <damping>{{damping}}</damping>
+          <friction>{{friction}}</friction>
+          <spring_stiffness>{{spring_stiffness}}</spring_stiffness>
+          <spring_reference>{{spring_reference}}</spring_reference>
+        </dynamics>
+      </axis>
+      <axis2>
+        <xyz expressed_in="__model__">0 0 1</xyz>
+        <dynamics>
+          <damping>{{damping}}</damping>
+          <friction>{{friction}}</friction>
+          <spring_stiffness>{{spring_stiffness}}</spring_stiffness>
+          <spring_reference>{{spring_reference}}</spring_reference>
+        </dynamics>
+      </axis2>
+      <physics>
+        <ode>
+          <cfm>0.001</cfm>
+          <erp>0.2</erp>
+        </ode>
+      </physics>
+    </joint>
+{%- endmacro -%}
+
+{%- macro fixed_joint(joint_name, parent_name, child_name) -%}
+    <joint name="{{joint_name}}" type="fixed">
+      <parent>{{parent_name}}</parent>
+      <child>{{child_name}}</child>
+    </joint>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# LIFT-DRAG PLUGIN FOR AERODYNAMICS #}
+{# ============================================================================= #}
+
+{%- macro lift_drag(link_name, length, radius) -%}
+{%- set area = 2.0 * radius * length -%}  {# Projected area #}
+    <plugin filename="gz-sim-lift-drag-system" name="gz::sim::systems::LiftDrag">
+      <a0>0</a0>
+      <cla>0</cla>
+      <cda>1.2</cda>  {# Drag coefficient for cylinder #}
+      <cma>0.0</cma>
+      <alpha_stall>0</alpha_stall>
+      <cla_stall>0</cla_stall>
+      <cda_stall>1.4</cda_stall>
+      <cma_stall>0.0</cma_stall>
+      <cp>0 0 0</cp>
+      <area>{{area}}</area>
+      <air_density>1.225</air_density>
+      <forward>0 1 0</forward>
+      <upward>0 0 1</upward>
+      <link_name>{{link_name}}</link_name>
+    </plugin>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# MAIN MODEL GENERATION #}
+{# ============================================================================= #}
+
+<?xml version="1.0" ?>
+<!-- DO NOT EDIT: Generated from tether.sdf.jinja -->
+<sdf version="1.9">
+  <model name="tether">
+    <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+
+    {# ========================================================================= #}
+    {# PART 1: Link_attach (vertical, from drone) #}
+    {# ========================================================================= #}
+    {{ link_attachment() }}
+
+    {# ========================================================================= #}
+    {# PART 2: Tether cable (horizontal along Y axis, on ground) #}
+    {# ========================================================================= #}
+    {% for n in range(number_elements) -%}
+      {# Position along Y axis (horizontal) #}
+      {%- set y = n * segment_length -%}
+      {%- set x = 0.0 -%}
+      {%- set z = ground_level + tether_radius -%}  {# Cable center at radius height #}
+      {%- set yaw = 1.5707963267948966 -%}  {# 90 degrees - align along Y axis #}
+
+      {{ tether_link(n, x, y, z, yaw) }}
+      {{ lift_drag('link_' ~ n, segment_length, tether_radius) }}
+    {% endfor -%}
+
+    {# ========================================================================= #}
+    {# JOINTS: Connect link_attachment -> tether}
+    {# ========================================================================= #}
+
+    {# Joint from link_attachment to first tether segment #}
+    {{ universal_joint('joint_0', 'link_attachment', 'link_0') }}
+
+    {# Joints between tether segments #}
+    {% for k in range(1, number_elements) -%}
+      {%- set parent_idx = k - 1 -%}
+      {{ universal_joint('joint_' ~ k, 'link_' ~ parent_idx, 'link_' ~ k) }}
+    {% endfor -%}
+
+  </model>
+</sdf>

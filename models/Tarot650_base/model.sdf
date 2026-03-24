@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <model name='Tarot650_base'>
+    <pose>0 0 .225 0 0 0</pose>
+    <self_collide>false</self_collide>
+    <static>false</static>
+    <link name="base_link">
+      <inertial>
+        <!-- TODO: CRITICAL - Get from SolidWorks Mass Properties -->
+        <!-- Tools -> Mass Properties in SolidWorks -->
+        <mass>3.5</mass>  <!-- PLACEHOLDER: X500=2.0kg, estimate X650=3.5kg -->
+        <inertia>
+          <!-- TODO: CRITICAL - Get from SolidWorks -->
+          <ixx>0.035</ixx>  <!-- PLACEHOLDER -->
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.035</iyy>  <!-- PLACEHOLDER -->
+          <iyz>0</iyz>
+          <izz>0.065</izz>  <!-- PLACEHOLDER -->
+        </inertia>
+      </inertial>
+      <gravity>true</gravity>
+      <velocity_decay/>
+
+      <!-- Main frame visual -->
+      <visual name="base_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/x650.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <!-- Collision boxes -->
+      <!-- TODO: Adjust collision geometry based on actual Tarot650 dimensions -->
+      <collision name="base_link_collision_0">
+        <!-- Main body collision -->
+        <pose>0 0 .01 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.45 0.45 0.08</size>  <!-- TODO: Measure from SolidWorks -->
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- TODO: Add landing gear collision boxes if needed -->
+
+      <!-- Sensors (using same as X500, adjust if needed) -->
+      <sensor name="air_pressure_sensor" type="air_pressure">
+        <always_on>1</always_on>
+        <update_rate>50</update_rate>
+        <air_pressure>
+          <!-- Noise modeled after BMP390 -->
+          <pressure>
+            <noise type="gaussian">
+              <mean>0</mean>
+              <stddev>3</stddev>
+            </noise>
+          </pressure>
+        </air_pressure>
+      </sensor>
+      <sensor name="magnetometer_sensor" type="magnetometer">
+        <always_on>1</always_on>
+        <update_rate>100</update_rate>
+        <magnetometer>
+          <x>
+            <noise type="gaussian">
+              <stddev>0.0001</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <stddev>0.0001</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <stddev>0.0001</stddev>
+            </noise>
+          </z>
+        </magnetometer>
+      </sensor>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>1</always_on>
+        <update_rate>250</update_rate>
+        <imu>
+          <angular_velocity>
+            <!-- Noise modeled after IIM42653 -->
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.0008726646</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.0008726646</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.0008726646</stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.00637</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.00637</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>0.00686</stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+      <sensor name="navsat_sensor" type="navsat">
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+      </sensor>
+    </link>
+
+
+  </model>
+</sdf>
+
+      <!-- Motor base visuals (4 motors in X configuration)
+      <!-- TODO: Verify motor positions from SolidWorks assembly -->
+      <!-- Current positions are estimates based on typical quadcopter X-config -->
+      <visual name="motor_base_0">
+        <!-- Front Right motor -->
+        <pose>0.22 -0.22 0.04 0 0 0</pose>  <!-- TODO: Get exact position -->
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_base.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name="motor_base_1">
+        <!-- Back Left motor -->
+        <pose>-0.22 0.22 0.04 0 0 0</pose>  <!-- TODO: Get exact position -->
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_base.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name="motor_base_2">
+        <!-- Front Left motor -->
+        <pose>0.22 0.22 0.04 0 0 0</pose>  <!-- TODO: Get exact position -->
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_base.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name="motor_base_3">
+        <!-- Back Right motor -->
+        <pose>-0.22 -0.22 0.04 0 0 0</pose>  <!-- TODO: Get exact position -->
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_base.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <!-- Collision boxes -->
+      <!-- TODO: Adjust collision geometry based on actual Tarot650 dimensions -->
+      <collision name="base_link_collision_0">
+        <!-- Main body collision -->
+        <pose>0 0 .01 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.45 0.45 0.08</size>  <!-- TODO: Measure from SolidWorks -->
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision> -->
+
+
+
+
+    <!-- Rotor 0: Front Right (CCW)
+    <link name="rotor_0">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <velocity_decay/>
+      <!-- TODO: Get exact rotor position from SolidWorks -->
+      <pose>0.22 -0.22 0.08 0 0 0</pose>  <!-- PLACEHOLDER position -->
+      <inertial>
+        <!-- TODO: CRITICAL - Get propeller inertia from SolidWorks -->
+        <!-- Select propeller + bell assembly -> Tools -> Mass Properties -->
+        <mass>0.025</mass>  <!-- PLACEHOLDER: estimate for 15x5 prop + bell -->
+        <inertia>
+          <ixx>5.0e-07</ixx>  <!-- PLACEHOLDER -->
+          <iyy>3.5e-05</iyy>  <!-- PLACEHOLDER -->
+          <izz>3.5e-05</izz>  <!-- PLACEHOLDER -->
+        </inertia>
+      </inertial>
+
+      <!-- Propeller visual -->
+      <visual name="rotor_0_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/prop_15x5_ccw.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+
+      <!-- Motor bell visual (rotates with prop) -->
+      <visual name="rotor_0_visual_motor_bell">
+        <pose>0 0 -0.04 0 0 0</pose>  <!-- TODO: Adjust Z offset -->
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_bell.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <!-- Propeller collision -->
+      <collision name="rotor_0_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <!-- TODO: Measure actual 15x5 prop dimensions -->
+            <size>0.38 0.03 0.002</size>  <!-- 15 inch = ~0.38m diameter -->
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <!-- <joint name="rotor_0_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_0</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint> -->
+
+    <!-- Rotor 1: Back Left (CCW) -->
+    <link name="rotor_1">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <velocity_decay/>
+      <pose>-0.22 0.22 0.08 0 0 0</pose>  <!-- TODO: Get exact position -->
+      <inertial>
+        <mass>0.025</mass>  <!-- PLACEHOLDER -->
+        <inertia>
+          <ixx>5.0e-07</ixx>
+          <iyy>3.5e-05</iyy>
+          <izz>3.5e-05</izz>
+        </inertia>
+      </inertial>
+      <visual name="rotor_1_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/prop_15x5_ccw.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name="rotor_1_visual_motor_bell">
+        <pose>0 0 -0.04 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_bell.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="rotor_1_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.03 0.002</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <!-- <joint name="rotor_1_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint> -->
+
+    <!-- Rotor 2: Front Left (CW) -->
+    <link name="rotor_2">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <velocity_decay/>
+      <pose>0.22 0.22 0.08 0 0 0</pose>  <!-- TODO: Get exact position -->
+      <inertial>
+        <mass>0.025</mass>  <!-- PLACEHOLDER -->
+        <inertia>
+          <ixx>5.0e-07</ixx>
+          <iyy>3.5e-05</iyy>
+          <izz>3.5e-05</izz>
+        </inertia>
+      </inertial>
+      <visual name="rotor_2_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/prop_15x5.dae</uri>  <!-- CW uses normal prop -->
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name="rotor_2_visual_motor_bell">
+        <pose>0 0 -0.04 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_bell.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="rotor_2_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.03 0.002</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <!-- <joint name="rotor_2_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint> -->
+
+    <!-- Rotor 3: Back Right (CW) -->
+    <link name="rotor_3">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <velocity_decay/>
+      <pose>-0.22 -0.22 0.08 0 0 0</pose>  <!-- TODO: Get exact position -->
+      <inertial>
+        <mass>0.025</mass>  <!-- PLACEHOLDER -->
+        <inertia>
+          <ixx>5.0e-07</ixx>
+          <iyy>3.5e-05</iyy>
+          <izz>3.5e-05</izz>
+        </inertia>
+      </inertial>
+      <visual name="rotor_3_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/prop_15x5.dae</uri>  <!-- CW uses normal prop -->
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name="rotor_3_visual_motor_bell">
+        <pose>0 0 -0.04 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://Tarot650_base/meshes/motor_3508_bell.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="rotor_3_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.03 0.002</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <joint name="rotor_3_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_3</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint> -->

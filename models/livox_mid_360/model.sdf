@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="livox_mid_360">
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      
+      <!-- Inertial properties - 265g weight -->
+      <inertial>
+        <pose>0 0 0 1.5707 0 0</pose>
+        <mass>0.265</mass>
+        <inertia>
+          <ixx>0.00028</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00028</iyy>
+          <iyz>0</iyz>
+          <izz>0.00018</izz>
+        </inertia>
+      </inertial>
+      
+      <!-- Collision geometry -->
+      <collision name="collision">
+        <pose>0 0 0 1.5707 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://livox_mid_360/meshes/Livox_Mid_360.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      
+      <!-- Visual geometry -->
+      <visual name="visual">
+        <pose>0 0 0 1.5707 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://livox_mid_360/meshes/Livox_Mid_360.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <!-- IMU Sensor - ICM40609 Built-in -->
+      <sensor name='imu_sensor' type='imu'>
+        <pose>0 0 0 0 0 0</pose>
+        <topic>imu</topic>
+        <update_rate>100</update_rate>
+        <enable_metrics>false</enable_metrics>
+        <imu>
+          <orientation_reference_frame>
+            <localization>CUSTOM</localization>
+            <custom_rpy>0 0 0</custom_rpy>
+            <grav_dir_x>0 0 -1</grav_dir_x>
+          </orientation_reference_frame>
+          
+          <!-- Angular velocity (Gyroscope) - ICM40609 specs -->
+          <angular_velocity>
+            <x>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.00069813</stddev> <!-- ~0.004 deg/s/√Hz * √100Hz -->
+                <bias_mean>0.0017453</bias_mean> <!-- ~0.1 deg/s bias -->
+                <bias_stddev>0.00087266</bias_stddev>
+                <dynamic_bias_stddev>0.00017453</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000.0</dynamic_bias_correlation_time>
+                <precision>0.0001</precision>
+              </noise>
+            </x>
+            <y>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.00069813</stddev>
+                <bias_mean>0.0017453</bias_mean>
+                <bias_stddev>0.00087266</bias_stddev>
+                <dynamic_bias_stddev>0.00017453</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000.0</dynamic_bias_correlation_time>
+                <precision>0.0001</precision>
+              </noise>
+            </y>
+            <z>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.00069813</stddev>
+                <bias_mean>0.0017453</bias_mean>
+                <bias_stddev>0.00087266</bias_stddev>
+                <dynamic_bias_stddev>0.00017453</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000.0</dynamic_bias_correlation_time>
+                <precision>0.0001</precision>
+              </noise>
+            </z>
+          </angular_velocity>
+          
+          <!-- Linear acceleration (Accelerometer) - ICM40609 specs -->
+          <linear_acceleration>
+            <x>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.0196</stddev> <!-- ~0.2 mg/√Hz * √100Hz -->
+                <bias_mean>0.0981</bias_mean> <!-- ~0.01 m/s² bias -->
+                <bias_stddev>0.0490</bias_stddev>
+                <dynamic_bias_stddev>0.0098</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300.0</dynamic_bias_correlation_time>
+                <precision>0.001</precision>
+              </noise>
+            </x>
+            <y>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.0196</stddev>
+                <bias_mean>0.0981</bias_mean>
+                <bias_stddev>0.0490</bias_stddev>
+                <dynamic_bias_stddev>0.0098</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300.0</dynamic_bias_correlation_time>
+                <precision>0.001</precision>
+              </noise>
+            </y>
+            <z>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.0196</stddev>
+                <bias_mean>0.0981</bias_mean>
+                <bias_stddev>0.0490</bias_stddev>
+                <dynamic_bias_stddev>0.0098</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300.0</dynamic_bias_correlation_time>
+                <precision>0.001</precision>
+              </noise>
+            </z>
+          </linear_acceleration>
+          
+          <enable_orientation>true</enable_orientation>
+        </imu>
+      </sensor>
+      
+      <!-- LiDAR Sensor - Livox MID-360 -->
+      <sensor name='gpu_lidar' type='gpu_lidar'>
+        <pose>0 0 0 0 0 0</pose>
+        <topic>lidar</topic>
+        <update_rate>10</update_rate> <!-- Frame rate: 10 Hz -->
+        <enable_metrics>false</enable_metrics>
+        <lidar>
+          <scan>
+            <!-- Horizontal: 360° coverage -->
+            <horizontal>
+              <samples>240</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.1415926536</min_angle>
+              <max_angle>3.1415926536</max_angle>
+            </horizontal>
+            
+            <!-- Vertical: -7° to +52° (59° total FOV) -->
+            <vertical>
+              <samples>64</samples>
+              <min_angle>-0.12217304764</min_angle> <!-- -7° -->
+              <max_angle>0.90757121103</max_angle>  <!-- +52° -->
+              <resolution>1</resolution>
+            </vertical>
+          </scan>
+          
+          <!-- Detection range: 0.1m to 40m @ 10% reflectivity (70m @ 80%) -->
+          <range>
+            <min>0.1</min>
+            <max>40.0</max>
+            <resolution>0.001</resolution> <!-- 1mm resolution for ≤2cm precision -->
+          </range>
+          
+          <!-- Range precision: ≤2cm @ 10m -->
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0.015</stddev> <!-- 1.5cm standard deviation -->
+          </noise>
+          
+          <visibility_mask>4294967295</visibility_mask>
+        </lidar>
+      </sensor>
+      
+    </link>
+  </model>
+</sdf>

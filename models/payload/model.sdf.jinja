@@ -1,0 +1,275 @@
+{#-------------------SDF generator for Payload Gazebo model----------#}
+{#--------------The parameters below are the ones to be tweaked------------------#}
+{#--------------------------:Tweakable parameters:-------------------------------#}
+
+{# ============================================================================= #}
+{# PAYLOAD CONFIGURATION #}
+{# ============================================================================= #}
+{%- set payload_mass = 0.8 -%}           {# Mass in kg (0.2kg = 200g default) #}
+{%- set payload_radius = 0.05 -%}        {# Radius in meters (5cm = 0.05m) #}
+{%- set payload_shape = 'box' -%}     {# Options: 'sphere', 'box', 'cylinder' #}
+
+{# For box shape (only used if payload_shape = 'box') #}
+{%- set box_length = 0.15 -%}            {# Length (x) in meters #}
+{%- set box_width = 0.15 -%}             {# Width (y) in meters #}
+{%- set box_height = 0.15 -%}            {# Height (z) in meters #}
+
+{# For cylinder shape (only used if payload_shape = 'cylinder') #}
+{%- set cylinder_radius = 0.05 -%}       {# Radius in meters #}
+{%- set cylinder_length = 0.15 -%}       {# Length in meters #}
+
+{# Visual properties #}
+{%- set use_rgba_color = true -%}        {# true = use RGBA, false = use Gazebo material #}
+{%- set payload_color = 'Orange' -%}     {# Gazebo color (if use_rgba_color = false) #}
+
+{# RGBA color (if use_rgba_color = true) #}
+{%- set rgba_ambient = '1.0 0.5 0.0 1.0' -%}   {# Orange ambient #}
+{%- set rgba_diffuse = '1.0 0.5 0.0 1.0' -%}   {# Orange diffuse #}
+{%- set rgba_specular = '0.5 0.5 0.5 1.0' -%}  {# Gray specular #}
+{%- set rgba_emissive = '0 0 0 1.0' -%}        {# No emission #}
+
+{# Physics properties #}
+{%- set linear_damping = 0.05 -%}         {# Air resistance (0.0 = no drag, 1.0 = high drag) #}
+{%- set angular_damping = 0.05 -%}        {# Rotational damping #}
+{%- set friction_mu = 0.6 -%}            {# Surface friction coefficient #}
+{%- set restitution = 0.1 -%}            {# Bounce coefficient (0.0 = no bounce, 1.0 = perfect bounce) #}
+
+{# ============================================================================= #}
+{# AUTO-CALCULATED INERTIA (DO NOT MODIFY) #}
+{# ============================================================================= #}
+{# Sphere inertia: I = (2/5) * m * r^2 #}
+{%- set sphere_inertia = 0.4 * payload_mass * payload_radius * payload_radius -%}
+
+{# Box inertia: Ixx = (1/12) * m * (h^2 + d^2) #}
+{%- set box_ixx = (1.0/12.0) * payload_mass * (box_width * box_width + box_height * box_height) -%}
+{%- set box_iyy = (1.0/12.0) * payload_mass * (box_length * box_length + box_height * box_height) -%}
+{%- set box_izz = (1.0/12.0) * payload_mass * (box_length * box_length + box_width * box_width) -%}
+
+{# Cylinder inertia (along Z axis) #}
+{%- set cyl_ixx = (1.0/12.0) * payload_mass * (3 * cylinder_radius * cylinder_radius + cylinder_length * cylinder_length) -%}
+{%- set cyl_iyy = cyl_ixx -%}
+{%- set cyl_izz = 0.5 * payload_mass * cylinder_radius * cylinder_radius -%}
+
+{# Drag area calculation #}
+{%- set sphere_area = 3.14159 * payload_radius * payload_radius -%}
+{%- set box_area = box_length * box_width -%}
+{%- set cyl_area = 2.0 * cylinder_radius * cylinder_length -%}
+
+{# ============================================================================= #}
+{# MACROS #}
+{# ============================================================================= #}
+
+{%- macro sphere_geometry(radius) -%}
+        <geometry>
+          <sphere>
+            <radius>{{radius}}</radius>
+          </sphere>
+        </geometry>
+{%- endmacro -%}
+
+{%- macro box_geometry(length, width, height) -%}
+        <geometry>
+          <box>
+            <size>{{length}} {{width}} {{height}}</size>
+          </box>
+        </geometry>
+{%- endmacro -%}
+
+{%- macro cylinder_geometry(radius, length) -%}
+        <geometry>
+          <cylinder>
+            <radius>{{radius}}</radius>
+            <length>{{length}}</length>
+          </cylinder>
+        </geometry>
+{%- endmacro -%}
+
+{%- macro material_gazebo(color_name) -%}
+        <material>
+          <script>
+            <name>Gazebo/{{color_name}}</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+{%- endmacro -%}
+
+{%- macro material_rgba(ambient, diffuse, specular, emissive) -%}
+        <material>
+          <ambient>{{ambient}}</ambient>
+          <diffuse>{{diffuse}}</diffuse>
+          <specular>{{specular}}</specular>
+          <emissive>{{emissive}}</emissive>
+        </material>
+{%- endmacro -%}
+
+{# ============================================================================= #}
+{# MAIN MODEL GENERATION #}
+{# ============================================================================= #}
+
+<?xml version="1.0" ?>
+<!-- DO NOT EDIT: Generated from model.sdf.jinja -->
+<!-- Payload mass: {{payload_mass}}kg, Shape: {{payload_shape}} -->
+<sdf version="1.9">
+  <model name="payload">
+    <pose>0 0 0 0 0 0</pose>
+
+    <!-- Static: false = dynamic object, will respond to forces -->
+    <static>false</static>
+
+    <!-- Disable self-collision within this model -->
+    <self_collide>false</self_collide>
+
+    <!-- Main payload link -->
+    <link name="payload_link">
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <velocity_decay>
+        <linear>{{linear_damping}}</linear>
+        <angular>{{angular_damping}}</angular>
+      </velocity_decay>
+
+      <!-- Initial pose: center at origin -->
+      <pose>0 0 0 0 0 0</pose>
+
+      <!-- ============================================ -->
+      <!-- INERTIAL PROPERTIES (Auto-calculated) -->
+      <!-- ============================================ -->
+      <inertial>
+        <mass>{{payload_mass}}</mass>
+        {% if payload_shape == 'sphere' %}
+        <!-- Sphere inertia: I = (2/5) * m * r^2 -->
+        <inertia>
+          <ixx>{{sphere_inertia}}</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>{{sphere_inertia}}</iyy>
+          <iyz>0</iyz>
+          <izz>{{sphere_inertia}}</izz>
+        </inertia>
+        {% elif payload_shape == 'box' %}
+        <!-- Box inertia -->
+        <inertia>
+          <ixx>{{box_ixx}}</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>{{box_iyy}}</iyy>
+          <iyz>0</iyz>
+          <izz>{{box_izz}}</izz>
+        </inertia>
+        {% elif payload_shape == 'cylinder' %}
+        <!-- Cylinder inertia (along Z axis) -->
+        <inertia>
+          <ixx>{{cyl_ixx}}</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>{{cyl_iyy}}</iyy>
+          <iyz>0</iyz>
+          <izz>{{cyl_izz}}</izz>
+        </inertia>
+        {% endif %}
+        <pose>0 0 0 0 0 0</pose>
+      </inertial>
+
+      <!-- ============================================ -->
+      <!-- COLLISION GEOMETRY -->
+      <!-- ============================================ -->
+      <collision name="collision">
+        {% if payload_shape == 'sphere' %}
+        {{ sphere_geometry(payload_radius) }}
+        {% elif payload_shape == 'box' %}
+        {{ box_geometry(box_length, box_width, box_height) }}
+        {% elif payload_shape == 'cylinder' %}
+        {{ cylinder_geometry(cylinder_radius, cylinder_length) }}
+        {% endif %}
+
+        <!-- Surface properties -->
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.01</min_depth>
+              <max_vel>10.0</max_vel>
+              <kp>5e5</kp>
+              <kd>500</kd>
+            </ode>
+          </contact>
+
+          <friction>
+            <ode>
+              <mu>{{friction_mu}}</mu>
+              <mu2>{{friction_mu}}</mu2>
+            </ode>
+            <torsional>
+              <coefficient>0.5</coefficient>
+              <surface_radius>{{payload_radius}}</surface_radius>
+              <use_patch_radius>true</use_patch_radius>
+              <ode>
+                <slip>0.0</slip>
+              </ode>
+            </torsional>
+          </friction>
+
+          <bounce>
+            <restitution_coefficient>{{restitution}}</restitution_coefficient>
+            <threshold>0.05</threshold>
+          </bounce>
+        </surface>
+
+        <max_contacts>8</max_contacts>
+      </collision>
+
+      <!-- ============================================ -->
+      <!-- VISUAL GEOMETRY -->
+      <!-- ============================================ -->
+      <visual name="visual">
+        {% if payload_shape == 'sphere' %}
+        {{ sphere_geometry(payload_radius) }}
+        {% elif payload_shape == 'box' %}
+        {{ box_geometry(box_length, box_width, box_height) }}
+        {% elif payload_shape == 'cylinder' %}
+        {{ cylinder_geometry(cylinder_radius, cylinder_length) }}
+        {% endif %}
+
+        {% if use_rgba_color %}
+        {{ material_rgba(rgba_ambient, rgba_diffuse, rgba_specular, rgba_emissive) }}
+        {% else %}
+        {{ material_gazebo(payload_color) }}
+        {% endif %}
+        <cast_shadows>false</cast_shadows>
+        <transparency>0.0</transparency>
+      </visual>
+
+    </link>
+
+    <!-- ============================================ -->
+    <!-- AERODYNAMIC DRAG PLUGIN -->
+    <!-- ============================================ -->
+    <plugin filename="gz-sim-lift-drag-system" name="gz::sim::systems::LiftDrag">
+      <!-- Drag coefficient for {{payload_shape}} -->
+      {% if payload_shape == 'sphere' %}
+      <cda>0.47</cda>  <!-- Sphere drag coefficient -->
+      <area>{{sphere_area}}</area>
+      {% elif payload_shape == 'box' %}
+      <cda>1.05</cda>  <!-- Box drag coefficient -->
+      <area>{{box_area}}</area>
+      {% elif payload_shape == 'cylinder' %}
+      <cda>0.82</cda>  <!-- Cylinder drag coefficient -->
+      <area>{{cyl_area}}</area>
+      {% endif %}
+
+      <cla>0.0</cla>
+      <a0>0.0</a0>
+      <cma>0.0</cma>
+      <alpha_stall>0</alpha_stall>
+      <cla_stall>0.0</cla_stall>
+      <cda_stall>{{0.47 if payload_shape == 'sphere' else (1.05 if payload_shape == 'box' else 0.82)}}</cda_stall>
+      <cma_stall>0.0</cma_stall>
+
+      <cp>0 0 0</cp>
+      <air_density>1.225</air_density>
+      <forward>1 0 0</forward>
+      <upward>0 0 1</upward>
+      <link_name>payload_link</link_name>
+    </plugin>
+
+  </model>
+</sdf>

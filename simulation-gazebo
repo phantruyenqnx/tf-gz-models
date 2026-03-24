@@ -90,20 +90,25 @@ def main():
 
     # Launch gazebo simulation
     print('> Launching gazebo simulation...')
+
+    # Prepare command - use absolute paths to avoid path resolution issues in Gazebo GUI
+    model_store_abs = os.path.abspath(args.model_store)
+    cmd = f'GZ_SIM_RESOURCE_PATH={model_store_abs}/models '
+    # cmd += f'GZ_SIM_SYSTEM_PLUGIN_PATH={model_store_abs}/plugins '
+    cmd += f'GZ_SIM_SERVER_CONFIG_PATH={model_store_abs}/server.config '
+    cmd += f'gz sim -r {model_store_abs}/worlds/{args.world}.sdf'
+
+    if args.headless:
+        cmd = f'{cmd} -s'
+
+    if args.gz_partition:
+        cmd = f'GZ_PARTITION={args.gz_partition} {cmd}'
+    if args.gz_ip:
+        cmd = f'GZ_IP={args.gz_ip} {cmd}'
+
+    print(f"Command: {cmd}")
+
     if not args.dryrun:
-        cmd = f'GZ_SIM_RESOURCE_PATH={args.model_store}/models '
-        # cmd += f'GZ_SIM_SYSTEM_PLUGIN_PATH={args.model_store}/plugins '
-        cmd += f'GZ_SIM_SERVER_CONFIG_PATH={args.model_store}/server.config '
-        cmd += f'gz sim -r {args.model_store}/worlds/{args.world}.sdf'
-
-        if args.headless:
-            cmd = f'{cmd} -s'
-
-        if args.gz_partition:
-            cmd = f'GZ_PARTITION={args.gz_partition} {cmd}'
-        if args.gz_ip:
-            cmd = f'GZ_IP={args.gz_ip} {cmd}'
-
         try:
             process_handle = run(cmd)
 

@@ -33,3 +33,24 @@ The following arguments can be passed:
 `--dryrun` A boolean variable that can be set when running testcases. It will not provide any interactivity and will not start Gazebo simulation.
 
 `--headless` A boolean variable providing the ability to run in headless (server-only) mode. This is the [mode of operation in macOS](https://gazebosim.org/docs/harmonic/getstarted#macos), and is more suitable for container use.
+
+Quy ước màu trục tọa độ:
+🔴 X axis = RED (Đỏ)
+🟢 Y axis = GREEN (Xanh lá)
+🔵 Z axis = BLUE (Xanh dương)
+Ghi nhớ: RGB = XYZ
+
+Hệ tọa độ Gazebo (Right-handed coordinate system):
+
+        Z (Blue - Xanh dương)
+        ↑
+        |
+        |
+        +----→ X (Red - Đỏ)
+       /
+      /
+     ↓
+    Y (Green - Xanh lá)
+X (Đỏ): Thường hướng về phía trước (forward)
+Y (Xanh lá): Thường hướng sang trái (left)
+Z (Xanh dương): Thường hướng lên trên (up)
