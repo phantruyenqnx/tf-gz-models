@@ -597,5 +597,8 @@
         </dynamics>
       </axis>
     </joint>
+    <!-- M3-BE-2: publish rotor joint states to /model/x500_*/joint_state -->
+    <plugin filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher"/>
   </model>
 </sdf>

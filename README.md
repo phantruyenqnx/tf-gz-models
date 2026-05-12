@@ -54,3 +54,87 @@ Hệ tọa độ Gazebo (Right-handed coordinate system):
 X (Đỏ): Thường hướng về phía trước (forward)
 Y (Xanh lá): Thường hướng sang trái (left)
 Z (Xanh dương): Thường hướng lên trên (up)
+
+## TF Studio bridge topics (M3-BE-2)
+
+`server.config` loads a fixed set of `gz-sim` system plugins for every
+TF Studio session. The `websocket.gzlaunch` bridge has no topic
+allow-list and forwards every advertised topic to the browser, so this
+list also reflects what the M3-FE-7 overlays + Foxglove panels can see.
+
+Confirmed-emitting topics on a running session (replace `<w>` with the
+world name reported by `gz topic -l`):
+
+| Topic                              | Source plugin / system          | Used by                          |
+|------------------------------------|---------------------------------|----------------------------------|
+| `/world/<w>/stats`                 | gz-sim (built-in)               | Gazebo panel sim time / RTF pill |
+| `/world/<w>/clock`                 | gz-sim (built-in)               | ROS 2 `use_sim_time`             |
+| `/world/<w>/scene/info`            | SceneBroadcaster                | gzweb scene tree, M3-FE-7        |
+| `/world/<w>/scene/deletion`        | SceneBroadcaster                | gzweb scene tree                 |
+| `/world/<w>/state`                 | SceneBroadcaster                | gzweb scene tree                 |
+| `/world/<w>/pose/info`             | SceneBroadcaster                | Model-root poses                 |
+| `/world/<w>/dynamic_pose/info`     | SceneBroadcaster *(with `<publish_link_pose>true</publish_link_pose>`)* | **Per-link** poses for M3-FE-7 coordinate-frame overlays |
+| `/world/<w>/joint_state`           | **JointStatePublisher (M3-BE-2)** | Joint-angle labels for M3-FE-7   |
+| `/world/<w>/model/<m>/joint_state` | JointStatePublisher (per model) | Per-model joint introspection    |
+
+### `publish_link_pose`
+
+The `SceneBroadcaster` plugin defaults to publishing model-root poses
+only in gz-sim 8 — link-level pose entries (e.g. `x500_0/base_link`)
+are gated behind the `<publish_link_pose>true</publish_link_pose>`
+child element. M3-FE-7 needs link-level poses to render coordinate
+frames at each joint origin, so the flag is set unconditionally in
+`server.config`. The setting is idempotent: if a future gz-sim release
+flips the default to true, leaving the explicit `true` here is still
+correct.
+
+### `JointStatePublisher`
+
+`gz-sim-joint-state-publisher-system` (apt package
+`libgz-sim8-joint-state-publisher-system` from
+`ros-humble-ros-gzharmonic`, see phase1 §3.3) advertises both:
+
+- `/world/<w>/joint_state` — a combined `gz.msgs.Model` message for
+  every joint in every model in the world.
+- `/world/<w>/model/<model_name>/joint_state` — one message per
+  model, useful when only one vehicle's joints are of interest.
+
+No SDF-level configuration is required; loading the system plugin at
+world scope is sufficient.
+
+### Verification commands
+
+After restarting a session with the updated `server.config`:
+
+```bash
+# 1. Confirm at least one joint topic is advertised.
+gz topic -l | grep joint
+
+# 2. Confirm joint state messages are flowing.
+gz topic -e -t /world/<w>/joint_state | head -40
+
+# 3. Confirm per-link poses now appear (look for `<model>/<link>`,
+#    e.g. `x500_0/base_link`, in the `name:` fields).
+gz topic -e -t /world/<w>/dynamic_pose/info | head -60
+```
+
+### Contact sensors — deferred to M7
+
+The `gz-sim-contact-system` plugin is already loaded at world scope
+(`server.config`), so any `<sensor type="contact">` element declared
+in a model SDF would publish a contact topic automatically. **For
+Phase 1, no per-model contact sensors are annotated** in this repo's
+`models/x500*/model.sdf` files. Rationale:
+
+- M3-FE-7's coordinate-frame overlays do not require contact data.
+- Landing-gear contact visualisation is a stretch goal owned by M7
+  ("Multi-vehicle + ground-collision polish").
+- The x500 / x500_depth / x500_lidar variants share most links but
+  differ in sensor layout; annotating them now would couple the
+  Phase 1 model bundle to a stretch deliverable that may yet change
+  its preferred per-vehicle topology.
+
+When M7 picks this up, the work is purely SDF edits under
+`models/x500*/model.sdf` (adding `<sensor type="contact">` blocks to
+the landing-gear `<link>` elements). No `server.config` or
+`websocket.gzlaunch` change will be needed.
