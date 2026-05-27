@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version='1.9'>
-  <world name="default">
+  <world name="uav_contest_2026">
 
     <physics name='default_physics' default='0' type='ode'>
       <max_step_size>0.001</max_step_size>
