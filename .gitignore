@@ -1,1 +1,10 @@
 sdf_parsing/build/
+
+# Local design/spec notes — not for upstream
+docs/superpowers/
+
+# Python build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/

@@ -1,0 +1,4 @@
+# Collision generation tool (gen_collision.py)
+trimesh>=4.0
+coacd>=1.0
+numpy>=1.24

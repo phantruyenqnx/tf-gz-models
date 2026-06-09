@@ -2,6 +2,15 @@
 
 This directory contains tools for managing Gazebo models and ensuring offline capability for all simulation worlds.
 
+## Tools in this directory
+
+| Tool | Purpose |
+|------|---------|
+| [`collision/`](./collision/) | Generate simplified collision geometry from dense visual meshes — x500-style boxes (default) or CoACD convex decomposition. Used to fix the f450 collision. |
+| [`download_external_models.sh`](./download_external_models.sh) | Download external Fuel models for offline worlds (baylands, forest). |
+| [`avl_automation/`](./avl_automation/) | AVL aerodynamic coefficient automation for fixed-wing models. |
+| [`verify_offline.sh`](./verify_offline.sh) | Verify all worlds resolve their models offline. |
+
 ## Overview
 
 All world files in `../worlds/` have been standardized to follow a consistent format based on the warehouse world configuration. This ensures:
