@@ -9,8 +9,9 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-MODELS_DIR="$(cd "${SCRIPT_DIR}/../models" && pwd)"
-WORLDS_DIR="$(cd "${SCRIPT_DIR}/../worlds" && pwd)"
+# this script lives in tools/offline/ ; models and worlds are two levels up
+MODELS_DIR="$(cd "${SCRIPT_DIR}/../../models" && pwd)"
+WORLDS_DIR="$(cd "${SCRIPT_DIR}/../../worlds" && pwd)"
 
 # Colors for output
 RED='\033[0;31m'

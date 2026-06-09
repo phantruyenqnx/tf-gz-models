@@ -41,11 +41,13 @@ Project-specific notes live under [`docs/`](docs/):
 | Doc | What it covers |
 |-----|----------------|
 | [Gazebo coordinate frames](docs/coordinate-frames.md) | Axis colour convention (RGB = XYZ) and the right-handed frame |
+| [World file structure convention](docs/world-structure.md) | Standard 3-section layout every `worlds/*.sdf` follows |
 
 Models and tools document themselves locally:
 
 | Path | What it covers |
 |------|----------------|
+| [`worlds/README.md`](worlds/README.md) | List of simulation worlds and how to run/validate them |
 | [`models/f450/README.md`](models/f450/README.md) | F450 quadrotor SITL model (collision, spawn, sensors, propulsion) |
 | [`tools/README.md`](tools/README.md) | Model/world utilities (offline download, collision generator, AVL) |
 | [`tools/collision/README.md`](tools/collision/README.md) | Generate simplified collision geometry (box / CoACD) from visual meshes |

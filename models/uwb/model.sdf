@@ -1,0 +1,1312 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <!-- UWB world environment: buildings, trees, roads, soccer field, helipad + UWB anchors.
+       Self-contained: heliport texture lives under model://uwb/materials/textures. -->
+  <model name="uwb">
+    <static>true</static>
+
+    <model name="long_2story_building">
+      <static>true</static>
+      <pose>7 18 0.01 0 0 0</pose>
+      <link name="body">
+        <collision name="walls_collision">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>12 5 5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="walls_visual">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>12 5 5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.9 0.85 0.7 1</ambient>
+            <diffuse>0.9 0.85 0.7 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="roof_visual">
+          <pose>0 0 5.2 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>12.4 5.4 0.4</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.2 0.2 1</ambient>
+            <diffuse>0.6 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="door_visual">
+          <pose>-4 2.51 1 0 0 0</pose>
+          <geometry>
+            <box><size>1.2 0.05 2.0</size></box>
+          </geometry>
+          <material>
+            <ambient>0.4 0.2 0.1 1</ambient>
+          </material>
+        </visual>
+
+        <visual name="w_t1_left">
+          <pose>-1 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t1_right">
+          <pose>3 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+
+        <visual name="w_t2_left">
+          <pose>-4 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_center">
+          <pose>0 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_right">
+          <pose>4 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="3long_2story_building">
+      <static>true</static>
+      <pose>-19 0 0.01 0 0 1.55</pose>
+      <link name="body">
+        <collision name="walls_collision">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>12 5 5</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="walls_visual">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>12 5 5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.9 0.85 0.7 1</ambient>
+            <diffuse>0.9 0.85 0.7 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="roof_visual">
+          <pose>0 0 5.2 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>12.4 5.4 0.4</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.2 0.2 1</ambient>
+            <diffuse>0.6 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="door_visual">
+          <pose>-4 2.51 1 0 0 0</pose>
+          <geometry>
+            <box><size>1.2 0.05 2.0</size></box>
+          </geometry>
+          <material>
+            <ambient>0.4 0.2 0.1 1</ambient>
+          </material>
+        </visual>
+
+        <visual name="w_t1_left">
+          <pose>-1 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t1_right">
+          <pose>3 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+
+        <visual name="w_t2_left">
+          <pose>-4 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_center">
+          <pose>0 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_right">
+          <pose>4 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="2long_2story_building">
+      <static>true</static>
+      <pose>66 3 0.01 0 0 0</pose>
+      <link name="body">
+        <collision name="walls_collision">
+          <pose>0 0 15 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>50 10 20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="walls_visual">
+          <pose>0 0 10 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>50 10 20</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.9 0.85 0.7 1</ambient>
+            <diffuse>0.9 0.85 0.7 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="roof_visual">
+          <pose>0 0 20.2 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>50.4 10.4 0.4</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.2 0.2 1</ambient>
+            <diffuse>0.6 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="door_visual">
+          <pose>-20 2.51 1 0 0 0</pose>
+          <geometry>
+            <box><size>1.2 0.05 2.0</size></box>
+          </geometry>
+          <material>
+            <ambient>0.4 0.2 0.1 1</ambient>
+          </material>
+        </visual>
+
+        <visual name="w_t1_left">
+          <pose>-20 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t1_center_left">
+          <pose>-8 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t1_center_right">
+          <pose>8 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t1_right">
+          <pose>20 2.51 1.5 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+
+        <visual name="w_t2_left">
+          <pose>-20 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_center_left">
+          <pose>-8 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_center">
+          <pose>0 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_center_right">
+          <pose>8 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+        <visual name="w_t2_right">
+          <pose>20 2.51 4 0 0 0</pose>
+          <geometry><box><size>1 0.06 1</size></box></geometry>
+          <material><ambient>0.5 0.8 1 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Updated Building: 100m x 10m x 30m, 3 floors with multiple windows -->
+    <model name="building_centered_tower">
+      <static>true</static>
+      <pose>-9 -45 0 0 0 0</pose>
+      <link name="link">
+        <visual name="base_structure">
+          <pose>0 0 10 0 0 0</pose>
+          <geometry>
+            <box><size>60 15 20</size></box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.5 0.9 1</ambient>
+            <diffuse>0.2 0.5 0.9 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="center_tower">
+          <pose>0 0 35 0 0 0</pose>
+          <geometry>
+            <box><size>20 10 30</size></box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.4 0.8 1</ambient>
+            <diffuse>0.1 0.4 0.8 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="tower_window_frame">
+          <pose>0 5.01 40 0 0 0</pose>
+          <geometry><box><size>4 0.1 6</size></box></geometry>
+          <material><ambient>0.1 0.1 0.1 1</ambient></material>
+        </visual>
+
+        <visual name="tower_window_glass">
+          <pose>0 5.05 40 0 0 0</pose>
+          <geometry><box><size>3.6 0.05 5.6</size></box></geometry>
+          <material>
+            <ambient>0.4 0.7 0.95 0.6</ambient>
+            <diffuse>0.4 0.7 0.95 0.6</diffuse>
+          </material>
+        </visual>
+
+        <visual name="base_balcony_line">
+          <pose>0 7.55 15 0 0 0</pose>
+          <geometry><box><size>60 0.2 1</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- New blue house: 3 floors, 20x30x30 m -->
+    <model name="blue_3floor_house">
+      <static>true</static>
+      <pose>62 50 0.01 0 0 1.6</pose>
+      <link name="body">
+        <collision name="collision">
+          <pose>0 0 15 0 0 0</pose>
+          <geometry><box><size>20 30 30</size></box></geometry>
+        </collision>
+
+        <visual name="walls_visual">
+          <pose>0 0 15 0 0 0</pose>
+          <geometry><box><size>20 30 30</size></box></geometry>
+          <material>
+            <ambient>0.1 0.3 0.8 1</ambient>
+            <diffuse>0.1 0.3 0.8 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="floor1">
+          <pose>0 0 5 0 0 0</pose>
+          <geometry><box><size>20 30 10</size></box></geometry>
+          <material>
+            <ambient>0.1 0.4 0.9 1</ambient>
+            <diffuse>0.1 0.4 0.9 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="floor2">
+          <pose>0 0 15 0 0 0</pose>
+          <geometry><box><size>20 30 10</size></box></geometry>
+          <material>
+            <ambient>0.1 0.35 0.85 1</ambient>
+            <diffuse>0.1 0.35 0.85 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="floor3">
+          <pose>0 0 25 0 0 0</pose>
+          <geometry><box><size>20 30 10</size></box></geometry>
+          <material>
+            <ambient>0.08 0.28 0.75 1</ambient>
+            <diffuse>0.08 0.28 0.75 1</diffuse>
+          </material>
+        </visual>
+
+        <inertial>
+          <mass>1000</mass>
+          <inertia>
+            <ixx>1</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1</iyy><iyz>0</iyz><izz>1</izz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <model name="tree_model">
+      <static>true</static>
+      <pose>43 -11 0 0 0 0</pose>
+      <link name="link">
+        <collision name="trunk_collision">
+          <pose>0 0 2 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.15</radius>
+              <length>4.0</length>
+            </cylinder>
+          </geometry>
+        </collision>
+
+        <visual name="trunk_visual">
+          <pose>0 0 2 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.15</radius>
+              <length>4.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.3 0.2 0.1 1</ambient>
+            <diffuse>0.3 0.2 0.1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="branch_1">
+          <pose>-0.5 0 3.5 0 -0.8 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>1.5</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.3 0.2 0.1 1</ambient>
+          </material>
+        </visual>
+
+        <visual name="branch_2">
+          <pose>0.5 0 3.5 0 0.8 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.08</radius>
+              <length>1.5</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.3 0.2 0.1 1</ambient>
+          </material>
+        </visual>
+
+        <visual name="leaves_top">
+          <pose>0 0 5 0 0 0</pose>
+          <geometry>
+            <ellipsoid>
+              <radii>2.5 2.5 1.2</radii>
+            </ellipsoid>
+          </geometry>
+          <material>
+            <ambient>0.1 0.4 0.1 1</ambient>
+            <diffuse>0.1 0.4 0.1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="leaves_lower">
+          <pose>0 0 4.2 0 0 0</pose>
+          <geometry>
+            <ellipsoid>
+              <radii>3.5 3.0 0.8</radii>
+            </ellipsoid>
+          </geometry>
+          <material>
+            <ambient>0.1 0.35 0.1 0.9</ambient>
+            <diffuse>0.1 0.35 0.1 0.9</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Row of 5 trees, 5m tall, spaced 2m apart -->
+    <model name="tree_row">
+      <static>true</static>
+      <pose>6 -15 0 0 0 0</pose>
+      <link name="link">
+        <!-- Tree 1 -->
+        <visual name="tree_1_trunk">
+          <pose>-4 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_1_foliage">
+          <pose>-4 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 2 -->
+        <visual name="tree_2_trunk">
+          <pose>-2 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_2_foliage">
+          <pose>-2 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 3 -->
+        <visual name="tree_3_trunk">
+          <pose>0 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_3_foliage">
+          <pose>0 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 4 -->
+        <visual name="tree_4_trunk">
+          <pose>2 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_4_foliage">
+          <pose>2 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 5 -->
+        <visual name="tree_5_trunk">
+          <pose>4 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_5_foliage">
+          <pose>4 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Row of 5 trees, 5m tall, spaced 2m apart -->
+    <model name="four_row">
+      <static>true</static>
+      <pose>-11 2 0 0 0 1.5</pose>
+      <link name="link">
+        <!-- Tree 1 -->
+        <visual name="tree_1_trunk">
+          <pose>-6 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_1_foliage">
+          <pose>-6 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 2 -->
+        <visual name="tree_2_trunk">
+          <pose>0 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_2_foliage">
+          <pose>0 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 3 -->
+        <visual name="tree_3_trunk">
+          <pose>3 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_3_foliage">
+          <pose>3 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 4 -->
+        <visual name="tree_4_trunk">
+          <pose>6 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_4_foliage">
+          <pose>6 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+
+        <!-- Tree 5 -->
+        <visual name="tree_5_trunk">
+          <pose>9 0 1.25 0 0 0</pose>
+          <geometry><cylinder><radius>0.15</radius><length>2.5</length></cylinder></geometry>
+          <material><ambient>0.4 0.2 0.1 1</ambient><diffuse>0.4 0.2 0.1 1</diffuse></material>
+        </visual>
+        <visual name="tree_5_foliage">
+          <pose>9 0 3.8 0 0 0</pose>
+          <geometry><sphere><radius>1.5</radius></sphere></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Asphalt Road with white and yellow markings -->
+    <model name="road">
+      <static>true</static>
+      <pose>52 -31 0 0 0 0</pose>
+      <link name="link">
+        <visual name="asphalt_surface">
+          <pose>0 0 0.01 0 0 0</pose>
+          <geometry><box><size>200 10 0.02</size></box></geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="white_border_left">
+          <pose>0 -5.25 0.02 0 0 0</pose>
+          <geometry><box><size>200 0.5 0.05</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="white_border_right">
+          <pose>0 5.25 0.02 0 0 0</pose>
+          <geometry><box><size>200 0.5 0.05</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="yellow_center_line">
+          <pose>0 0 0.02 0 0 0</pose>
+          <geometry><box><size>200 0.3 0.05</size></box></geometry>
+          <material>
+            <ambient>1 1 0.8 1</ambient>
+            <diffuse>1 1 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Horizontal Road (perpendicular) - creates intersection -->
+    <model name="horizontal_road">
+      <static>true</static>
+      <pose>32 -40 0 0 0 0</pose>
+      <link name="link">
+        <visual name="asphalt_surface_h">
+          <pose>0 0 0.01 0 0 0</pose>
+          <geometry><box><size>10 200 0.02</size></box></geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="white_border_front">
+          <pose>-5.25 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.5 200 0.05</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="white_border_back">
+          <pose>5.25 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.5 200 0.05</size></box></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="yellow_center_line_h">
+          <pose>0 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.3 200 0.05</size></box></geometry>
+          <material>
+            <ambient>1 1 0.8 1</ambient>
+            <diffuse>1 1 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Soccer Field with Artificial Grass and Blue Grid -->
+    <model name="soccer_field">
+      <static>true</static>
+      <pose>92 -80 0 0 0 0</pose>
+      <link name="field">
+        <visual name="grass_surface">
+          <pose>0 0 0.01 0 0 0</pose>
+          <geometry>
+            <box><size>100 70 0.02</size></box>
+          </geometry>
+          <material>
+            <ambient>0.15 0.65 0.15 1</ambient>
+            <diffuse>0.15 0.65 0.15 1</diffuse>
+          </material>
+        </visual>
+
+        <!-- Vertical grid lines (along x-axis) -->
+        <visual name="grid_v_1">
+          <pose>-40 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_2">
+          <pose>-30 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_3">
+          <pose>-20 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_4">
+          <pose>-10 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_5">
+          <pose>0 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_6">
+          <pose>10 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_7">
+          <pose>20 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_8">
+          <pose>30 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_v_9">
+          <pose>40 0 0.02 0 0 0</pose>
+          <geometry><box><size>0.15 70 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+
+        <!-- Horizontal grid lines (along y-axis) -->
+        <visual name="grid_h_1">
+          <pose>0 -30 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_h_2">
+          <pose>0 -20 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_h_3">
+          <pose>0 -10 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_h_4">
+          <pose>0 0 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_h_5">
+          <pose>0 10 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_h_6">
+          <pose>0 20 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+        <visual name="grid_h_7">
+          <pose>0 30 0.02 0 0 0</pose>
+          <geometry><box><size>100 0.15 0.01</size></box></geometry>
+          <material><ambient>0 0.4 0.9 1</ambient><diffuse>0 0.4 0.9 1</diffuse></material>
+        </visual>
+
+        <!-- North net - Blue mesh grid -->
+        <visual name="net_north_h_1">
+          <pose>0 35.1 2.5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_h_2">
+          <pose>0 35.1 5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_h_3">
+          <pose>0 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_h_4">
+          <pose>0 35.1 10 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_h_5">
+          <pose>0 35.1 12.5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_1">
+          <pose>-48 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_2">
+          <pose>-36 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_3">
+          <pose>-24 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_4">
+          <pose>-12 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_5">
+          <pose>0 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_6">
+          <pose>12 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_7">
+          <pose>24 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_8">
+          <pose>36 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_north_v_9">
+          <pose>48 35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+
+        <!-- South net - Blue mesh grid -->
+        <visual name="net_south_h_1">
+          <pose>0 -35.1 2.5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_h_2">
+          <pose>0 -35.1 5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_h_3">
+          <pose>0 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_h_4">
+          <pose>0 -35.1 10 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_h_5">
+          <pose>0 -35.1 12.5 0 0 0</pose>
+          <geometry><box><size>100.2 0.08 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_1">
+          <pose>-48 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_2">
+          <pose>-36 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_3">
+          <pose>-24 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_4">
+          <pose>-12 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_5">
+          <pose>0 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_6">
+          <pose>12 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_7">
+          <pose>24 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_8">
+          <pose>36 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_south_v_9">
+          <pose>48 -35.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+
+        <!-- East net - Blue mesh grid -->
+        <visual name="net_east_h_1">
+          <pose>50.1 0 2.5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_h_2">
+          <pose>50.1 0 5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_h_3">
+          <pose>50.1 0 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_h_4">
+          <pose>50.1 0 10 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_h_5">
+          <pose>50.1 0 12.5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_1">
+          <pose>50.1 -32.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_2">
+          <pose>50.1 -21.4 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_3">
+          <pose>50.1 -10.7 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_4">
+          <pose>50.1 0 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_5">
+          <pose>50.1 10.7 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_6">
+          <pose>50.1 21.4 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_east_v_7">
+          <pose>50.1 32.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+
+        <!-- West net - Blue mesh grid -->
+        <visual name="net_west_h_1">
+          <pose>-50.1 0 2.5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_h_2">
+          <pose>-50.1 0 5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_h_3">
+          <pose>-50.1 0 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_h_4">
+          <pose>-50.1 0 10 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_h_5">
+          <pose>-50.1 0 12.5 0 0 0</pose>
+          <geometry><box><size>0.08 70.2 0.08</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_1">
+          <pose>-50.1 -32.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_2">
+          <pose>-50.1 -21.4 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_3">
+          <pose>-50.1 -10.7 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_4">
+          <pose>-50.1 0 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_5">
+          <pose>-50.1 10.7 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_6">
+          <pose>-50.1 21.4 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+        <visual name="net_west_v_7">
+          <pose>-50.1 32.1 7.5 0 0 0</pose>
+          <geometry><box><size>0.08 0.08 15</size></box></geometry>
+          <material><ambient>0 0.6 1 1</ambient><diffuse>0 0.6 1 1</diffuse></material>
+        </visual>
+
+        <!-- Corner posts (4 corners, 15m tall) -->
+        <visual name="post_ne">
+          <pose>50 35 7.5 0 0 0</pose>
+          <geometry><box><size>0.3 0.3 15</size></box></geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="post_nw">
+          <pose>-50 35 7.5 0 0 0</pose>
+          <geometry><box><size>0.3 0.3 15</size></box></geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="post_se">
+          <pose>50 -35 7.5 0 0 0</pose>
+          <geometry><box><size>0.3 0.3 15</size></box></geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <visual name="post_sw">
+          <pose>-50 -35 7.5 0 0 0</pose>
+          <geometry><box><size>0.3 0.3 15</size></box></geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.2 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1</iyy><iyz>0</iyz><izz>1</izz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- HELIPAD in Safe Zone + 4 UWB anchors -->
+    <model name="helipad">
+      <static>true</static>
+      <pose>0 0 0.008 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 2 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://uwb/materials/textures/Heliport.png</albedo_map>
+                <metalness>0.0</metalness>
+                <roughness>0.8</roughness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <collision name="base_collision">
+          <geometry>
+            <box>
+              <size>2 2 0.01</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="pillar_1_visual">
+          <pose>-1 -1 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.05</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.8 0.2 0.2 1</ambient>
+            <diffuse>0.8 0.2 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name="pillar_1_collision">
+          <pose>-1 -1 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.05</radius>
+              <length>1.0</length>
+            </cylinder>
+          </geometry>
+        </collision>
+
+        <visual name="pillar_2_visual">
+          <pose>1 -1 0.75 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
+          <material><ambient>0.8 0.2 0.2 1</ambient><diffuse>0.8 0.2 0.2 1</diffuse></material>
+        </visual>
+        <collision name="pillar_2_collision">
+          <pose>1 -1 0.75 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
+        </collision>
+
+        <visual name="pillar_3_visual">
+          <pose>1 1 0.75 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
+          <material><ambient>0.8 0.2 0.2 1</ambient><diffuse>0.8 0.2 0.2 1</diffuse></material>
+        </visual>
+        <collision name="pillar_3_collision">
+          <pose>1 1 0.75 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
+        </collision>
+
+        <visual name="pillar_4_visual">
+          <pose>-1 1 0.75 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
+          <material><ambient>0.8 0.2 0.2 1</ambient><diffuse>0.8 0.2 0.2 1</diffuse></material>
+        </visual>
+        <collision name="pillar_4_collision">
+          <pose>-1 1 0.75 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <!-- UWB anchors (inlined red boxes, formerly include model://uwb tag) -->
+      <model name="anchor_0">
+        <static>true</static>
+        <pose>-1 -1 1.0 0 0 0</pose>
+        <link name="link">
+          <visual name="visual">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+          </visual>
+          <collision name="collision">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+          </collision>
+        </link>
+      </model>
+
+      <model name="anchor_1">
+        <static>true</static>
+        <pose>1 -1 1.5 0 0 0</pose>
+        <link name="link">
+          <visual name="visual">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+          </visual>
+          <collision name="collision">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+          </collision>
+        </link>
+      </model>
+
+      <model name="anchor_2">
+        <static>true</static>
+        <pose>1 1 1.5 0 0 0</pose>
+        <link name="link">
+          <visual name="visual">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+          </visual>
+          <collision name="collision">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+          </collision>
+        </link>
+      </model>
+
+      <model name="anchor_3">
+        <static>true</static>
+        <pose>-1 1 1.5 0 0 0</pose>
+        <link name="link">
+          <visual name="visual">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+          </visual>
+          <collision name="collision">
+            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+          </collision>
+        </link>
+      </model>
+    </model>
+
+    <model name="field_with_border">
+      <static>true</static>
+      <pose>12 0 0 0 0 0</pose>
+      <link name="ground">
+        <!-- NỀN SÂN -->
+        <visual name="ground_visual">
+          <geometry>
+            <box>
+              <size>26 26 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.3 0.3 0.3 1</diffuse>
+          </material>
+        </visual>
+
+        <collision name="ground_collision">
+          <geometry>
+            <box>
+              <size>26 26 0.01</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <!-- VIỀN VÀNG -->
+        <!-- Trên -->
+        <visual name="border_top">
+          <pose>0 13 0.011 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>26 0.1 0.002</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+
+        <!-- Dưới -->
+        <visual name="border_bottom">
+          <pose>0 -13 0.011 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>26 0.1 0.002</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+
+        <!-- Trái -->
+        <visual name="border_left">
+          <pose>-13 0 0.011 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 26 0.002</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+
+        <!-- Phải -->
+        <visual name="border_right">
+          <pose>13 0 0.011 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1 26 0.002</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </model>
+</sdf>

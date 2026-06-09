@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <sdf version='1.9'>
   <world name='baylands'>
+
+    <!-- ===================== 1. PHYSICS & GPS COORDINATE ===================== -->
     <physics name='default_physics' default='0' type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
@@ -9,6 +11,15 @@
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type='adiabatic'/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>10.77923939246397</latitude_deg>
+      <longitude_deg>106.7124930421324</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+
+    <!-- ===================== 2. ENVIRONMENT & LIGHT ===================== -->
     <scene>
       <ambient>0.8 0.5 1</ambient>
       <grid>false</grid>
@@ -36,6 +47,8 @@
         <falloff>0</falloff>
       </spot>
     </light>
+
+    <!-- ===================== 3. WORLD MODELS ===================== -->
     <include>
       <uri>model://baylands</uri>
       <name>park</name>
@@ -45,12 +58,6 @@
       <uri>model://Coast Water</uri>
       <pose relative_to='park'>0 0 -2 0 0 0</pose>
     </include>
-    <spherical_coordinates>
-      <surface_model>EARTH_WGS84</surface_model>
-      <world_frame_orientation>ENU</world_frame_orientation>
-      <latitude_deg>10.77923939246397</latitude_deg>
-      <longitude_deg>106.7124930421324</longitude_deg>
-      <elevation>0</elevation>
-    </spherical_coordinates>
+
   </world>
 </sdf>

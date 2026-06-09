@@ -12,7 +12,8 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-MODELS_DIR="$(cd "${SCRIPT_DIR}/../models" && pwd)"
+# this script lives in tools/offline/ ; the models directory is two levels up
+MODELS_DIR="$(cd "${SCRIPT_DIR}/../../models" && pwd)"
 
 # Colors for output
 RED='\033[0;31m'
