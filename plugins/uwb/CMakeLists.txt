@@ -31,5 +31,17 @@ if(GTest_FOUND)
   add_test(NAME Ranging_TEST COMMAND Ranging_TEST)
 endif()
 
+add_library(uwb_core STATIC
+  src/UwbChannelModel.cc
+  src/UwbChannelModel_tables.cc)
+target_include_directories(uwb_core PUBLIC include)
+target_link_libraries(uwb_core PUBLIC gz-math7::gz-math7)
+
+if(GTest_FOUND)
+  add_executable(UwbChannelModel_TEST test/UwbChannelModel_TEST.cc)
+  target_link_libraries(UwbChannelModel_TEST GTest::gtest_main uwb_core)
+  add_test(NAME UwbChannelModel_TEST COMMAND UwbChannelModel_TEST)
+endif()
+
 # Temporary object so the project configures before real sources exist.
 add_library(placeholder OBJECT src/placeholder.cc)
