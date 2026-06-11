@@ -43,5 +43,15 @@ if(GTest_FOUND)
   add_test(NAME UwbChannelModel_TEST COMMAND UwbChannelModel_TEST)
 endif()
 
+add_library(uwb_geom STATIC src/RayObstacleSet.cc)
+target_include_directories(uwb_geom PUBLIC include)
+target_link_libraries(uwb_geom PUBLIC gz-math7::gz-math7)
+
+if(GTest_FOUND)
+  add_executable(RayObstacleSet_TEST test/RayObstacleSet_TEST.cc)
+  target_link_libraries(RayObstacleSet_TEST GTest::gtest_main uwb_geom)
+  add_test(NAME RayObstacleSet_TEST COMMAND RayObstacleSet_TEST)
+endif()
+
 # Temporary object so the project configures before real sources exist.
 add_library(placeholder OBJECT src/placeholder.cc)
