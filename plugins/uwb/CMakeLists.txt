@@ -53,5 +53,12 @@ if(GTest_FOUND)
   add_test(NAME RayObstacleSet_TEST COMMAND RayObstacleSet_TEST)
 endif()
 
+target_sources(uwb_core PRIVATE src/Resolver.cc)
+if(GTest_FOUND)
+  add_executable(Resolver_TEST test/Resolver_TEST.cc)
+  target_link_libraries(Resolver_TEST GTest::gtest_main uwb_core)
+  add_test(NAME Resolver_TEST COMMAND Resolver_TEST)
+endif()
+
 # Temporary object so the project configures before real sources exist.
 add_library(placeholder OBJECT src/placeholder.cc)
