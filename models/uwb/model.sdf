@@ -1165,63 +1165,8 @@
           <geometry><cylinder><radius>0.05</radius><length>1.5</length></cylinder></geometry>
         </collision>
       </link>
-
-      <!-- UWB anchors (inlined red boxes, formerly include model://uwb tag) -->
-      <model name="anchor_0">
-        <static>true</static>
-        <pose>-1 -1 1.0 0 0 0</pose>
-        <link name="link">
-          <visual name="visual">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
-          </visual>
-          <collision name="collision">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-          </collision>
-        </link>
-      </model>
-
-      <model name="anchor_1">
-        <static>true</static>
-        <pose>1 -1 1.5 0 0 0</pose>
-        <link name="link">
-          <visual name="visual">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
-          </visual>
-          <collision name="collision">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-          </collision>
-        </link>
-      </model>
-
-      <model name="anchor_2">
-        <static>true</static>
-        <pose>1 1 1.5 0 0 0</pose>
-        <link name="link">
-          <visual name="visual">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
-          </visual>
-          <collision name="collision">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-          </collision>
-        </link>
-      </model>
-
-      <model name="anchor_3">
-        <static>true</static>
-        <pose>-1 1 1.5 0 0 0</pose>
-        <link name="link">
-          <visual name="visual">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-            <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
-          </visual>
-          <collision name="collision">
-            <geometry><box><size>0.02 0.02 0.02</size></box></geometry>
-          </collision>
-        </link>
-      </model>
+      <!-- UWB anchors were moved out to worlds/uwb.sdf (top-level anchor_0..anchor_3)
+           so they live with the world and are not duplicated. -->
     </model>
 
     <model name="field_with_border">

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <!-- F450 + UWB tag variant. Follows the x500_lidar_2d / x500_mono_cam convention:
+       merge-include the motorized base airframe, then add the sensor (here a plugin). -->
+  <model name='f450-uwb'>
+    <include merge='true'>
+      <uri>f450</uri>
+    </include>
+
+    <plugin filename="gtec_uwb_plugin" name="gtec::UwbSensorPlugin">
+      <update_rate>25</update_rate>
+      <nlosSoftWallWidth>0.25</nlosSoftWallWidth>
+      <tag_z_offset>0.0</tag_z_offset>
+      <tag_link>base_link</tag_link>
+      <anchor_prefix>anchor_</anchor_prefix>
+      <all_los>false</all_los>
+      <tag_id>0</tag_id>
+      <return_angle>true</return_angle>
+    </plugin>
+  </model>
+</sdf>
