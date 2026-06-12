@@ -60,5 +60,9 @@ if(GTest_FOUND)
   add_test(NAME Resolver_TEST COMMAND Resolver_TEST)
 endif()
 
+add_library(uwb_ecm OBJECT src/EcmGeometry.cc)
+target_include_directories(uwb_ecm PUBLIC include src)
+target_link_libraries(uwb_ecm PUBLIC uwb_geom gz-sim8::gz-sim8 gz-math7::gz-math7)
+
 # Temporary object so the project configures before real sources exist.
 add_library(placeholder OBJECT src/placeholder.cc)
