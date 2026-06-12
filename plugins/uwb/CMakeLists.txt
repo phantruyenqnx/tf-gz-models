@@ -68,3 +68,9 @@ target_link_libraries(gtec_uwb_plugin
           gz-sim8::gz-sim8 gz-transport13::gz-transport13
           gz-plugin2::register gz-math7::gz-math7)
 install(TARGETS gtec_uwb_plugin LIBRARY DESTINATION lib)
+
+# Example consumer: a standalone subscriber that prints Ranging messages.
+# Links the generated message type directly, so it needs no GZ_DESCRIPTOR_PATH.
+add_executable(echo_ranging tools/echo_ranging.cc)
+target_link_libraries(echo_ranging
+  PRIVATE ${PROJECT_NAME}-gtec_msgs gz-transport13::gz-transport13)

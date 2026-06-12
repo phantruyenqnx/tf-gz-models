@@ -36,13 +36,32 @@ also open the GUI.
 
 ### Inspecting the output
 
-The plugin publishes a **custom** protobuf type. `gz topic -l` will list
-`/gtec/toa/ranging` and its type, but `gz topic -e` **cannot decode** custom
-messages unless their descriptor is registered with gz-msgs — it will appear to
-hang silently. To inspect the data, use a small compiled subscriber that links the
-generated `gtec_msgs/msgs/ranging.pb.h`, or register the message descriptor.
-(Registering the descriptor is also what makes the later `ros_gz_bridge` mapping
-straightforward.)
+The plugin publishes a **custom** protobuf type, so the CLI tools need its
+descriptor before they can decode it. `gz topic -l` lists `/gtec/toa/ranging`
+and its type without any setup, but plain `gz topic -e` will appear to hang
+silently because gz-msgs does not know the schema.
+
+The fix is the mechanism Gazebo documents for custom messages: point
+`GZ_DESCRIPTOR_PATH` at the build folder (which holds the generated
+`*.gz_desc`), then echo as usual:
+
+```bash
+GZ_DESCRIPTOR_PATH="$PWD/build" gz topic -e -t /gtec/toa/ranging
+```
+
+See the [gz-msgs message-generation docs](https://gazebosim.org/api/msgs/10/messagegeneration.html)
+(section on `GZ_DESCRIPTOR_PATH`). To avoid re-typing it, export the variable in
+your shell profile. The same descriptor is what makes a later `ros_gz_bridge`
+mapping straightforward.
+
+Alternatively, build the bundled example subscriber, which links the generated
+`gtec_msgs/msgs/ranging.pb.h` directly and so needs no env var, printing a
+compact unit-labelled line per message:
+
+```bash
+cmake --build build --target echo_ranging
+./build/echo_ranging
+```
 
 Expected behaviour in `uwb_demo.sdf`: `anchor_id 1` (clear line of sight) reports
 range ≈ 6000 mm; `anchor_id 0` (behind the 0.3 m wall, wider than the 0.25 m
