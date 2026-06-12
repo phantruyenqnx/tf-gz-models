@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="uwb_demo">
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+
+    <model name="ground"><static>true</static>
+      <link name="link"><collision name="c"><geometry><plane>
+        <normal>0 0 1</normal><size>50 50</size></plane></geometry></collision>
+      </link></model>
+
+    <!-- anchors: visual-only, names start with the prefix -->
+    <model name="uwb_anchor0"><static>true</static><pose>6 0 1 0 0 0</pose>
+      <link name="link"><visual name="v"><geometry><box><size>0.2 0.2 0.2</size></box></geometry></visual></link></model>
+    <model name="uwb_anchor1"><static>true</static><pose>0 6 1 0 0 0</pose>
+      <link name="link"><visual name="v"><geometry><box><size>0.2 0.2 0.2</size></box></geometry></visual></link></model>
+
+    <!-- a wall between the tag and anchor0 -->
+    <model name="wall"><static>true</static><pose>3 0 1 0 0 0</pose>
+      <link name="link"><collision name="c"><geometry><box><size>0.3 4 2</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>0.3 4 2</size></box></geometry></visual></link></model>
+
+    <!-- the tag, carrying the plugin -->
+    <model name="tag"><pose>0 0 1 0 0 0</pose>
+      <link name="tag_0"><collision name="c"><geometry><box><size>0.1 0.1 0.1</size></box></geometry></collision></link>
+      <plugin filename="gtec_uwb_plugin" name="gtec::UwbSensorPlugin">
+        <update_rate>25</update_rate>
+        <nlosSoftWallWidth>0.25</nlosSoftWallWidth>
+        <tag_z_offset>0.0</tag_z_offset>
+        <tag_link>tag_0</tag_link>
+        <anchor_prefix>uwb_anchor</anchor_prefix>
+        <all_los>false</all_los>
+        <tag_id>0</tag_id>
+        <return_angle>true</return_angle>
+      </plugin>
+    </model>
+  </world>
+</sdf>
