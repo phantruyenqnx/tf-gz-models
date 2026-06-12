@@ -60,9 +60,11 @@ if(GTest_FOUND)
   add_test(NAME Resolver_TEST COMMAND Resolver_TEST)
 endif()
 
-add_library(uwb_ecm OBJECT src/EcmGeometry.cc)
-target_include_directories(uwb_ecm PUBLIC include src)
-target_link_libraries(uwb_ecm PUBLIC uwb_geom gz-sim8::gz-sim8 gz-math7::gz-math7)
-
-# Temporary object so the project configures before real sources exist.
-add_library(placeholder OBJECT src/placeholder.cc)
+add_library(gtec_uwb_plugin SHARED
+  src/UwbSensorPlugin.cc src/EcmGeometry.cc)
+target_include_directories(gtec_uwb_plugin PRIVATE include src)
+target_link_libraries(gtec_uwb_plugin
+  PRIVATE uwb_core uwb_geom ${PROJECT_NAME}-gtec_msgs
+          gz-sim8::gz-sim8 gz-transport13::gz-transport13
+          gz-plugin2::register gz-math7::gz-math7)
+install(TARGETS gtec_uwb_plugin LIBRARY DESTINATION lib)
