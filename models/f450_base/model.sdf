@@ -281,49 +281,12 @@
        </sensor>
 
       <!-- GPS the PX4 bridge actually reads: name MUST stay 'navsat_sensor' on base_link.
-           Realistic u-blox NEO-M9N model: SMALL white noise (tiny fix-to-fix jitter, like a
-           receiver-smoothed output) + a SLOW dynamic bias (Gauss-Markov) for the ~1-2 m
-           absolute wander. This passes EKF2's on-ground GPS drift check (which measures
-           fix-to-fix rate, not absolute error) while still looking like real GPS.
-           UNITS: horizontal position = DEGREES (1 deg ~ 111320 m), vertical = METERS, vel = m/s.
-           Dynamic-bias steady-state stddev = dynamic_bias_stddev * sqrt(tau/2), tau = correlation_time. -->
+           Bare sensor (x500 default) on purpose: the realistic M9N noise model is now produced
+           in gz_bridge::addGpsNoise() so it is seeded/reproducible and runtime-tunable
+           (SIM_GPS_SEED / SIM_GPS_NSC / SIM_GPS_BIAS_*). See docs/research/uwb/05_precision_landing.md. -->
       <sensor name="navsat_sensor" type="navsat">
         <always_on>1</always_on>
         <update_rate>20</update_rate> <!-- M9N max nav rate -->
-        <navsat>
-          <position_sensing>
-            <horizontal>
-              <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>0.0000002</stddev>                         <!-- white ~0.022 m: small fix-to-fix jitter -->
-                <dynamic_bias_stddev>0.0000016</dynamic_bias_stddev> <!-- steady ~1.5 m abs (0.0000016*sqrt(75)*111320) -->
-                <dynamic_bias_correlation_time>150.0</dynamic_bias_correlation_time> <!-- slow wander, seconds -->
-              </noise>
-            </horizontal>
-            <vertical>
-              <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>0.05</stddev>                              <!-- white 0.05 m -->
-                <dynamic_bias_stddev>0.35</dynamic_bias_stddev>    <!-- steady ~3.0 m abs (0.35*sqrt(75)) -->
-                <dynamic_bias_correlation_time>150.0</dynamic_bias_correlation_time>
-              </noise>
-            </vertical>
-          </position_sensing>
-          <velocity_sensing>
-            <horizontal>
-              <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>0.05</stddev>           <!-- m/s, M9N velocity accuracy -->
-              </noise>
-            </horizontal>
-            <vertical>
-              <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>0.10</stddev>           <!-- m/s, vertical velocity error -->
-              </noise>
-            </vertical>
-          </velocity_sensing>
-        </navsat>
       </sensor>
 
       <!-- Ground-truth GPS: PX4 does NOT read this (different name), no noise. For logging/comparison. -->
