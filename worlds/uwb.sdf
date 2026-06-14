@@ -102,12 +102,16 @@
       <uri>model://uwb</uri>
       <pose>0 0 0 0 0 0</pose>
     </include>
-    <!-- Four fixed UWB anchors at the corners of a 5 m square, 2 m high, around the
-         helipad at the origin. The gtec_uwb_plugin on the f450-uwb tag discovers them
-         by the name prefix "anchor_"; the suffix is the anchor id (0..3). -->
+    <!-- Four fixed UWB anchors at the corners of a 5 m square around the helipad at the origin.
+         Heights are STAGGERED (0.5 / 3.0 m, NON-coplanar) on purpose: coplanar anchors give no
+         vertical observability, so UWB could not constrain altitude. Staggered heights let the
+         range fusion observe N/E/D, so UWB owns the full 3-D position near the pad. The
+         gtec_uwb_plugin on the f450-uwb tag discovers them by name prefix "anchor_" (suffix = id).
+         Positions must match EKF2_UWB_A{id}_{N,E,D} (set in the 4023_gz_f450-uwb airframe);
+         gz ENU (x,y,z) -> EKF NED (N=y, E=x, D=-z). -->
     <model name="anchor_0">
       <static>true</static>
-      <pose>-2.5 -2.5 2.0 0 0 0</pose>
+      <pose>-2.5 -2.5 0.5 0 0 0</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
@@ -117,7 +121,7 @@
     </model>
     <model name="anchor_1">
       <static>true</static>
-      <pose>2.5 -2.5 2.0 0 0 0</pose>
+      <pose>2.5 -2.5 3.0 0 0 0</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
@@ -127,7 +131,7 @@
     </model>
     <model name="anchor_2">
       <static>true</static>
-      <pose>2.5 2.5 2.0 0 0 0</pose>
+      <pose>2.5 2.5 0.5 0 0 0</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
@@ -137,7 +141,7 @@
     </model>
     <model name="anchor_3">
       <static>true</static>
-      <pose>-2.5 2.5 2.0 0 0 0</pose>
+      <pose>-2.5 2.5 3.0 0 0 0</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.05 0.05 0.05</size></box></geometry>
